@@ -18,6 +18,21 @@ age = 12;
 const numbers: number[] = [1, 2, 3, 4, 5];
 numbers.push(7);
 
+//Багатовимірні масиви
+const numbersMatrix: number[][] = [
+  [1, 2],
+  [3, 4],
+];
+
+//Масиви з елементами різних типів
+let mixedArray: (number | string)[] = [1, "two"];
+
+//У такому масиві можна зберігати будь-що.
+let arrAny: any[];
+
+// Ми також можемо вказати тип масиву через узагальнення (generic):
+let numbersArray: Array<number> = [1, 2, 3, 4, 5];
+
 //так читати незручно
 const user: { name: string; age: number } = {
   name: "Bob",
