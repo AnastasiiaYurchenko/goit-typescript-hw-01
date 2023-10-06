@@ -146,3 +146,63 @@ const admin: User = {
   age: 53,
   role: "Admin",
 };
+
+//Індексні властивості
+
+// звичайний запис, тоді кожному обєкту треба прописувати типи. Це незручно, і повторюваний код
+// type Fruits = {
+//   apple: number;
+//   orange: number;
+//   banana: number;
+// };
+
+// type FrozenGoods = {
+//   fish: number;
+//   iceCream: number;
+//   berry: number;
+// };
+
+type Goods = {
+  [key: string]: number;
+};
+
+const fruits: Goods = {
+  apple: 24,
+  orange: 35,
+  banana: 40,
+};
+
+const frozenGoods: Goods = {
+  fish: 24,
+  iceCream: 35,
+  berry: 40,
+};
+
+//Визначте інтерфейс для обєкта , де ключем є рядок, а значенням - рядок або число.
+// Напишіть декілька прикладів таких обєктів
+
+type Info = {
+  [key: string]: string | number;
+};
+
+const userInfo: Info = {
+  name: "Bob",
+  age: 20,
+  country: "Ukraine",
+};
+
+const BookInfo: Info = {
+  title: "Jungle",
+  pages: 300,
+};
+
+//Створіть загальну функцію, яка приймає масив будь-якого типу і повертає масив у зворотньоиу порядку
+function reverse<T>(items: T[]): T[] {
+  return items.reverse();
+}
+
+let numbers1 = reverse<number>([1, 2, 3, 4, 5]);
+console.log(numbers1);
+
+let strings = reverse(["a", "b", "c", "d"]);
+console.log(strings);
