@@ -146,7 +146,7 @@ const admin: User = {
   age: 53,
   role: "Admin",
 };
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Індексні властивості
 
 // звичайний запис, тоді кожному обєкту треба прописувати типи. Це незручно, і повторюваний код
@@ -196,6 +196,9 @@ const BookInfo: Info = {
   pages: 300,
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//Generic
+
 //Створіть загальну функцію, яка приймає масив будь-якого типу і повертає масив у зворотньоиу порядку
 function reverse<T>(items: T[]): T[] {
   return items.reverse();
@@ -206,3 +209,62 @@ console.log(numbers1);
 
 let strings = reverse(["a", "b", "c", "d"]);
 console.log(strings);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//extends аналог слова "перевіряє". extends пишеться після того типу, який треба перевірити (провалідувати)
+
+function lengthOfObject<T extends { length: number }>(obj: T): number {
+  return obj.length;
+}
+
+lengthOfObject({ name: "Bob", length: 10 });
+console.log(lengthOfObject({ name: "Bob", length: 10 }));
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+// keyOf - ключ чого
+// [] - коли отримуємо щось динамічне
+//Створіть загальну функцію getProperty, яка приймає обєкт та ключ як рядок.
+//Функія повинна повертати значення цього ключа з обєкта
+
+const student = {
+  name: "Bob",
+  age: 20,
+};
+
+function getProperty<ObjType, KeyType extends keyof ObjType>(
+  obj: ObjType,
+  key: KeyType
+): ObjType[KeyType] {
+  return obj[key];
+}
+
+let studentName = getProperty(student, "name");
+console.log(studentName); //"Bob"
+
+// let studentAddress = getProperty(student, "address");
+// console.log(studentAddress); //undefined і помилка TypeScript, бо немає такого поля
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Partial - говорить візьми частинку цього типу <T>. Для оновлення поля чи полей обєкту
+
+type Todo = {
+  title: string;
+  description: string;
+  completed: boolean;
+};
+
+function updateTodo(todo: Todo, fieldToUpdate: Partial<Todo>): Todo {
+  return { ...todo, ...fieldToUpdate };
+}
+
+const todo1: Todo = {
+  title: "TypeScript",
+  description: "Learning",
+  completed: false,
+};
+
+const todo2 = updateTodo(todo1, {
+  description: "Learned already",
+  completed: true,
+});
+console.log(todo2);
