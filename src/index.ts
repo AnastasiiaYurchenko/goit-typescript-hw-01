@@ -268,3 +268,77 @@ const todo2 = updateTodo(todo1, {
   completed: true,
 });
 console.log(todo2);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//Readonly
+
+type User4 = {
+  name: string;
+  age: number;
+};
+
+const John: Readonly<User> = {
+  name: "John",
+  age: 20,
+};
+
+// John.age = 10; //Cannot assign to 'age' because it is a read-only property.
+// console.log(John);
+
+//для масивів ReadonlyArray
+const numbers2: ReadonlyArray<number> = [1, 2, 3, 4, 5];
+
+// numbers2.push(6); //Property 'push' does not exist on type 'readonly number[]'.
+// numbers2[0] = 5; //Index signature in type 'readonly number[]' only permits reading.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//Pick<T, K> - вибирає поля з вказаного типу
+
+type Person = {
+  name: string;
+  age: number;
+  address: string;
+};
+
+type PersonSummary = Pick<Person, "name" | "age">;
+
+//під капотом запис вище напище наступне:
+// type PersonSummary = {
+//   name: string;
+//   age: number;
+// };
+
+const BobSummary: PersonSummary = {
+  name: "Bob",
+  age: 20,
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Omit<T, K> - видаляє вказані ключі типу
+
+type Person2 = {
+  name: string;
+  age: number;
+  address: string;
+};
+
+type PersonSummary2 = Omit<Person2, "address">;
+
+const Rally: PersonSummary2 = {
+  name: "Rally",
+  age: 22,
+  //address: "Ukraine", //це поле недопустиме
+};
+
+//Record<K, T> - зберігає сталі значення, які не будуть змінюватись. Відмінність від enum - в Record можна добавляти динамічно значення, а в enum - не можна
+
+type CityDatabase = Record<string, number>; //string - тип ключа, number - тип значення
+
+const Database: CityDatabase = {
+  Kyiv: 123000,
+  Kharkiv: 34200,
+  Lviv: 21300,
+};
+
+//Додаємо новий запис в базу даних
+Database.Odessa = 124000;
